@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JIRA Issues</title>
+
+    <!-- Simple Datatables CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+
+   
+  
+
+
+    <!-- Table -->
+    <table id="Table"></table>
+    
+
+    <!-- Simple Datatables JS -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script>
+        const dataTable = new simpleDatatables.DataTable("#Table", {
+            searchable: false,
+            fixedHeight: true,
+            data:{
+                headings:['ID','Key','Created date'],
+                data:[['10019',	'DP-9',   '2025-02-12'],
+                ['10012',	'DP-2',   '2025-02-10'],
+                ['10011',	'DP-1',   '2025-02-11'],
+                ['10013',	'DP-3',   '2025-02-10'],
+                ],
+            }
+        })
+    </script>
+
+</body>
+</html>

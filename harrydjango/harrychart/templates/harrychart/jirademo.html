@@ -1,0 +1,81 @@
+
+
+{% extends "partials/base.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    <h2>Total Commits</h2>
+    <h3>{{ total_issues }}</h3>
+  </div>
+  <div class="col">
+    <h2>Merge</h2>
+    <h3>{{ total_merge }}</h3>
+  </div>
+  <div class="col">
+    <h2>Total Added Lines</h2>
+    <h3>{{ overall_added_lines }}</h3>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-7">
+    <h1>Charts</h1>
+
+
+    <div class="barchart">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById("myChart");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [{% for date in dates %} "{{ date }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+              label: "Number of Commits per day",
+              data: [{% for count in commit_count %} {{ count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+  </div>
+
+ 
+  <div class="col-md-4">
+    <div>
+      <canvas id="myDoughnutChart"></canvas>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctxDoughnut = document.getElementById("myDoughnutChart").getContext("2d");
+        new Chart(ctxDoughnut, {
+          type: "doughnut",
+          data: {
+            labels: [{% for name in author %} "{{ name }}",{% endfor %}],
+            datasets: [{
+              label: "Commits per User",
+              data: [{% for count in author_commit %} {{ count }},{% endfor %}],
+              borderWidth: 1
+            }]
+          }
+        });
+      });
+    </script>
+  </div>
+  {{ issues }}
+</div>
+
+{% endblock %}

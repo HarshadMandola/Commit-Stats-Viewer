@@ -1,0 +1,115 @@
+{% extends "partials/base.html" %}
+{% load static %}
+<link href={% static "css/main.css" %} rel="stylesheet" >
+{% block content %}
+
+<div class="row " >
+  <div class="col box">
+    <h2>Total Commits</h2>
+    <h3>{{ total_commits }}</h3>
+  </div>
+  <div class="col box">
+    <h2>Merge</h2>
+    <h3>{{ total_merge }}</h3>
+  </div>
+  <div class="col box">
+    <h2>Total Added Lines</h2>
+    <h3>{{ overall_added_lines }}</h3>
+  </div>
+</div>
+
+<div class="row mt-9">
+  <div class="col-md-8 p-0 mt-2  bar">
+    <div class="barchart">
+      <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById("myChart");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: [{% for date in dates %} "{{ date }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+            datasets: [{
+              label: "Number of Commits per day",
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(255, 159, 64, 0.8)',
+                'rgba(255, 205, 86, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(54, 162, 235, 0.8)',
+                'rgba(153, 102, 255, 0.8)',
+                'rgba(201, 203, 207, 0.8)'
+                ],
+              data: [{% for count in commit_count %} {{ count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+  </div>
+
+ 
+  <div class="col-md-4 p-0 dough">
+    <div class='doughnutchart'>
+      <canvas id="myDoughnutChart"></canvas>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctxDoughnut = document.getElementById("myDoughnutChart").getContext("2d");
+        new Chart(ctxDoughnut, {
+          type: "doughnut",
+          data: {
+            labels: [{% for name in author %} "{{ name }}",{% endfor %}],
+            datasets: [{
+              label: "Commits per User",
+              data: [{% for count in author_commit %} {{ count }},{% endfor %}],
+              borderWidth: 1
+            }]
+          }
+        });
+      });
+    </script>
+  </div>
+  {{ issues }}
+</div>
+<div class="row">
+  <div class='datatable col-md-8 p-0'>
+    {% include "harrychart/datatable.html" %}
+  </div>
+  <div class ='tablechart col-md-4 '>
+    <canvas id='tablechart'></canvas>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const ctxDoughnut = document.getElementById("tablechart").getContext("2d");
+      new Chart(ctxDoughnut, {
+        type: "polarArea",
+        data: {
+          labels: [{% for name in author %} "{{ name }}",{% endfor %}],
+          datasets: [{
+            label: "Commits per User",
+            data: [{% for count in author_commit %} {{ count }},{% endfor %}],
+            borderWidth: 1,
+            
+          }],
+        },
+        options: {
+          indexAxis:'y',
+        }
+      });
+    });
+  </script>
+</div>
+
+{% endblock %}
