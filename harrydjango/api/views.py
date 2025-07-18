@@ -8,7 +8,7 @@ from .models import Issues  # Ensure you import your model
 
 # JIRA Credentials
 JIRA_URL = "https://mandolaharshad6.atlassian.net"
-Api_Token = "ATATT3xFfGF0vBXP_13pHEhpn4CQYgvqizXs3T95JDNfoCwt7DU-UcESOKZrZID3ZXi04Mq0IIxR5EAk3TWRFrctZywN1CwW0-dWLZZK8qnCocQAISmBpK19dYSDUxEz2ERoFy95ARchTlLIfBehWMg_1Ip_k1NyM0x9CJ_HQskmnYsYvc4A7sc=1E4F1E2E"
+Api_Token = "ATATT3xFfGF0vBXP_13pHEhpn4CQYgvqizXs3T95JDNf-UcESOKZrZID3ZXi04Mq0IIxR5EAk3TWRFrctZywN1CwW0-dWLZZK8qnCocQAISmBpK19dYSDUxEz2ERoFy95ARchTlLIfBehWMg_1Ip_k1NyM0x9CJ_HQskmnYsYvc4A7sc=1E4F1E2E"
 Email = "mandolaharshad6@gmail.com"
 Project_Key = "DP"
 Jira_API_url = f"{JIRA_URL}/rest/api/3/search?jql=project%3D{Project_Key}"
